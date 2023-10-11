@@ -1,0 +1,46 @@
+html 
+    head 
+        title Productos 
+        link(href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous")
+    body 
+        .container
+            h2 Actualización o CRUD de productos 
+            p(style={color:error ? 'red':'green'}) #{message}
+                form(action="/product", method="POST") 
+                    div.row
+                        div.col
+                            label Código 
+                            input.form-control(type="text", placeholder="Código", name = "codProduct") 
+                        .col
+                            label Nombre
+                            input.form-control(type="text", placeholder="Nombre", name = "prodName")
+                    .row 
+                        .col 
+                            label Precio
+                            input.form-control(type="text", placeholder="Precio", name = "prodPrice")
+                        .col 
+                            label Existencia
+                            input.form-control(type="text", placeholder="Existencia", name = "prodStock")
+                    hr
+                    .row 
+                        .col
+                            button.btn.btn-success Guardar 
+                    hr
+                    if products.length>0 
+                        table.table.table-hover
+                            thead
+                                th Código Producto 
+                                th Nombre 
+                                th Precio
+                                th Existencia
+                            for prod in products 
+                                tr
+                                    td #{prod.codProduct}
+                                    td #{prod.prodName}
+                                    td #{prod.prodPrice}
+                                    td #{prod.prodStock}
+                    else
+                        h4(style={color:'red'}) No hay productos en el inventario
+                        
+
+                
