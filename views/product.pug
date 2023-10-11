@@ -33,12 +33,17 @@ html
                                 th Nombre 
                                 th Precio
                                 th Existencia
+                                th(colspan="2") Acciones
                             for prod in products 
                                 tr
                                     td #{prod.codProduct}
                                     td #{prod.prodName}
                                     td #{prod.prodPrice}
                                     td #{prod.prodStock}
+                                    td
+                                        a.btn.btn-dark Editar
+                                    td
+                                        a.btn.btn-dark Eliminar
                     else
                         h4(style={color:'red'}) No hay productos en el inventario
                         
