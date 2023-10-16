@@ -1,34 +1,41 @@
 const express = require('express');
 const routeproduct = express.Router();
 const Product = require('../models/product');
+//Modelos
+const Car = require('../models/car');
+const Rent = require('../models/rent');
+const User = require('../models/user');
+//
 const { render } = require('pug');
 
 
 let message=""
 let error=false
+
+// Endpoints Login
 routeproduct.get('/', async(req, res) => {
-    const prods= await Product.find();
-    res.render('product',{message:message,error:error,products:prods})
+   // const prods= await User.find();
+    res.render('login',{message:message,error:error})
 })
 
-
-
 routeproduct.post('/', async(req,res)=>{
-    await Product.findOne({codProduct:req.body.codProduct})
-    .then((product)=>{
-        if(product==null){
-            const prod =new Product(req.body);
-            prod.save();
-            message="Product Saved Succesfully"
-            res.redirect(303,'/product')
-            error=false
+    await User.findOne({username:req.body.username,password:req.body.password})
+    .then((user)=>{
+        if(user==null){
+            
+            message="Usuario o contraseña incorrectos"
+            res.redirect(303,'/')
+            error=true
         }
         else{
-            message="Product code already exist, try again"
-            error=true
+            
+            message="Ingreso Exitoso"
+            error=false
             
         }
-        res.redirect('/product')
+            res.redirect(303,'/car')
+       
+       
         //res.render('product',{message:message,error:error})
     })
     .catch((err)=>{
@@ -36,6 +43,38 @@ routeproduct.post('/', async(req,res)=>{
     })
     
 })
+
+//Endpoints Registrar
+
+routeproduct.get('/registro', async(req, res) => {
+    //const prods= await User.find();
+    res.render('registro',{message:message,error:error})
+})
+
+routeproduct.post('/registro', async(req,res)=>{
+    await User.findOne({username:req.body.username})
+    .then((user)=>{
+        if(user==null){
+            const newUser =new User(req.body);
+            newUser.save();
+            message="Usuario Registrado"
+            res.redirect(303,'/')
+            error=false
+        }
+        else{
+            message="Este Usuario ya existre pruebe con otro nombre"
+            error=true
+            
+        }
+        res.redirect('/registro')
+        //res.render('product',{message:message,error:error})
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+    
+})
+
 
 
 module.exports = routeproduct

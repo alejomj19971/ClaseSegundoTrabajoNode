@@ -1,0 +1,55 @@
+html 
+    head 
+        title Autos 
+        link(href = "https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous")
+    body 
+        .container
+            h2 Autos Disponibles
+            p(style={color:error ? 'red':'green'}) #{message}
+                form(action="/rent", method="POST") 
+                    div.row
+                        div.col
+                            label Platenumber 
+                            input.form-control(type="text", placeholder="Platenumber", name = "platenumber") 
+                        .col
+                            label Brand
+                            input.form-control(type="text", placeholder="Brand", name = "brand")
+                    .row 
+                        .col 
+                            label State
+                            input.form-control(type="text", placeholder="State", name = "state")
+                    .row 
+                        .col 
+                            label Rent Date
+                            input.form-control(type="text", placeholder="State", name = "rentdate")
+                        
+                    hr
+                    .row 
+                        .col
+                            button.btn.btn-success Guardar 
+                    .row 
+                        .col
+                            a(href="http://localhost:3200/car").btn.btn-primary.text-white  Volver
+                    
+                    hr
+                    if cars.length>0 
+                        table.table.table-hover
+                            thead
+                                th Placa
+                                th Marca 
+                                th Estado
+                                th(colspan="2") Acciones
+                            for car in cars 
+                                tr
+                                    td #{car.platenumber}
+                                    td #{car.brand}
+                                    td #{car.state}
+                                    td
+                                        a.btn.btn-dark Editar
+                                    td
+                                        a.btn.btn-dark Eliminar
+                    else
+                        h4(style={color:'red'}) No hay Autos en el inventario
+                        
+
+                
