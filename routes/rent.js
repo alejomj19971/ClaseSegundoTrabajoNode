@@ -36,7 +36,7 @@ const encontrarCarro=async(plateNumberForm)=>{
 
             if(car.state=="Disponible"){
                 error= false
-                return trusted
+                return true
             }else{
                 message="Automovil no disponible"
                 error= true
