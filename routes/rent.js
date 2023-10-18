@@ -24,7 +24,8 @@ const encontrarUsuario=async(usernameForm)=>{
             error=false
             return true
            
-        }else{
+        }
+        else{
             message="Usuario No encontrado"
             error= true
             return false
@@ -78,42 +79,54 @@ routeproduct.get('/', async(req, res) => {
 })
 
 routeproduct.post('/', async(req,res)=>{
-    await Rent.findOne({rentnumber:req.body.rentnumber})
-    .then((rent)=>{
+    const renta = await Rent.findOne({rentnumber:req.body.rentnumber})
+    const usuario = await User.findOne({username:req.body.username})
+    const auto = await Car.findOne({platenumber:req.body.platenumber})
 
-        if(rent==null){
+        if(renta==null){
             
-            const usuarioencontrado=encontrarUsuario(req.body.username);
-            const automovilChequeado=encontrarCarro(req.body.platenumber);
-
-            if(usuarioencontrado==false||automovilChequeado==false){
-                error=true
-                res.redirect('303','/rent')
-                
-            }else{
-                //cambiarEstadoAuto(req.body.platenumber)
+            if(usuario!=null && auto!=null && auto.state=="Disponible"){
                 const newRent =new Rent(req.body);
                 newRent.save();
                 message="Vehiculo rentado exitosamente"
                 error=false
-                res.redirect('303','/rent')
-               
+                res.redirect('/rent')
+            }else{
+
+
+                if(usuario==null){
+                    message="Usuario no Encontrado"
+                    error=true
+                    res.redirect('/rent')
+                }
                 
+                if(auto==null){
+                    message="Vehiculo no Encontrado"
+                    error=true
+                    res.redirect('/rent')
+
+                }
+
+                if(auto.state!="Disponible"){
+                message="Vehiculo no disponible"
+                error=true
+                res.redirect('/rent')
+                }
+
             }
+
         }
         else{
             message="Rent code already exist, try again"
             error=true
             
         }
-        res.redirect('/rent')
+        
         //res.render('product',{message:message,error:error})
     })
-    .catch((err)=>{
-        console.log(err);
-    })
     
-})
+    
+
 
 
 module.exports = routeproduct
