@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
 const rentSchema = new mongoose.Schema({
-    rentNumber: String,
+    rentnumber: String,
     username: String,
-    platenumber: Number,
+    platenumber: String,
     rentdate: {
         type:Date,
         default:Date.now

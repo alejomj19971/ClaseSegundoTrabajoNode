@@ -25,7 +25,7 @@ routeproduct.post('/', async(req,res)=>{
             const newCar =new Car(req.body);
             newCar.save();
             message="Vehículo guardado con éxito"
-            res.redirect(303,'/')
+            res.redirect(303,'/car')
             error=false
         }
         else{
@@ -33,7 +33,7 @@ routeproduct.post('/', async(req,res)=>{
             error=true
             
         }
-        res.redirect('/')
+        res.redirect('/car')
         //res.render('product',{message:message,error:error})
     })
     .catch((err)=>{

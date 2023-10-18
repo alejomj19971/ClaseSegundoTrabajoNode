@@ -14,16 +14,22 @@ html
                         .col
                             label Brand
                             input.form-control(type="text", placeholder="Brand", name = "brand")
-                    .row 
-                        .col 
-                            label State
-                            input.form-control(type="text", placeholder="State", name = "state")
+                
                         
                     hr
                     .row 
                         .col
                             button.btn.btn-success Guardar 
                     hr
+                    .row 
+                        .col
+                            a(href="http://localhost:3200/rent").btn.btn-primary.text-white Rentar
+                    hr
+                    .row 
+                        .col
+                            a(href="http://localhost:3200").btn.btn-primary.text-white Salir
+
+                    
                     if cars.length>0 
                         table.table.table-hover
                             thead
