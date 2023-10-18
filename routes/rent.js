@@ -83,8 +83,14 @@ routeproduct.post('/', async(req,res)=>{
     const usuario = await User.findOne({username:req.body.username})
     const auto = await Car.findOne({platenumber:req.body.platenumber})
 
+        if(renta!=null){
+            message="Este numero de renta ya existe"
+            error=trusted
+            res.redirect('/rent')
+        }
+
+
         if(renta==null){
-            
             if(usuario!=null && auto!=null && auto.state=="Disponible"){
                 const newRent =new Rent(req.body);
                 newRent.save();
@@ -92,7 +98,6 @@ routeproduct.post('/', async(req,res)=>{
                 error=false
                 res.redirect('/rent')
             }else{
-
 
                 if(usuario==null){
                     message="Usuario no Encontrado"
@@ -112,15 +117,10 @@ routeproduct.post('/', async(req,res)=>{
                 error=true
                 res.redirect('/rent')
                 }
-
             }
 
         }
-        else{
-            message="Rent code already exist, try again"
-            error=true
-            
-        }
+     
         
         //res.render('product',{message:message,error:error})
     })
